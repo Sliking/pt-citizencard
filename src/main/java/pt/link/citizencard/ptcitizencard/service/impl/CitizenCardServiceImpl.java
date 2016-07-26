@@ -7,30 +7,35 @@ import org.springframework.stereotype.Service;
 
 import pt.link.citizencard.ptcitizencard.cardreader.CitizenCard;
 import pt.link.citizencard.ptcitizencard.service.ICitizenCardService;
-import pteidlib.PTEID_Certif;
 import pteidlib.PteidException;
 
 @Service
 public class CitizenCardServiceImpl implements ICitizenCardService{
 	
+	private CitizenCard cc;
+	
 	@Override
 	public List<CitizenCard> listCitizenCards() {
 		List<CitizenCard> listCC = new ArrayList<CitizenCard>();
-		listCC.add(loadCC());		
+		listCC.add(getCC());		
 		return listCC;
 	}
 	
-	private CitizenCard loadCC(){
-		CitizenCard cc = new CitizenCard();
-		CitizenCard.loadPteidLib();
+	public CitizenCard getCC(){
+		return cc;
+	}
+	
+	public void loadCC(){
+		cc = new CitizenCard();
 		try{
-			cc.getData();
-			cc.getAddress();
+			CitizenCard.loadPteidLib();
+			if(cc.getData())
+				System.out.println("[DEBUG] Data retrieved with success");
+			/*if(cc.getAddress())
+				System.out.println("[DEBUG] Address retrieved with success");*/
 		} catch(PteidException e){
 			System.err.println("[ERROR] Failed to retrieve information from the Citizien Card");
 		}
-		
-		return cc;
 	}
 
 }

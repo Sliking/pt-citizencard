@@ -4,7 +4,7 @@ import javax.net.ssl.SSLSocketFactory;
 
 public class SSLClient {
 
-	try{
+	/*try{
 		SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-	}
+	}*/
 }

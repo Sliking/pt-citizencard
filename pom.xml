@@ -44,6 +44,12 @@
 		    <version>1.7.5</version>
 		</dependency>
 		
+		<dependency>
+       <groupId>org.slf4j</groupId>
+       <artifactId>slf4j-simple</artifactId>
+       <version>1.6.4</version>
+   </dependency>
+		
   		<dependency>
   			<groupId>openws-1.5.6.jar</groupId>
   			<artifactId>openws-1.5.6</artifactId>
@@ -56,29 +62,11 @@
 		    <version>0.3.9</version>
 		</dependency>
 		
-  		<!-- <dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>log4j-over-slf4j</artifactId>
-		    <version>1.7.5</version>
-		</dependency> 
-		
-  		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jul-to-slf4j</artifactId>
-			<version>1.7.5</version>
-		</dependency> -->
-		
   		<dependency>
 		    <groupId>joda-time</groupId>
 		    <artifactId>joda-time</artifactId>
 		    <version>2.2</version>
 		</dependency>
-		
-  		<!-- <dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>jcl-over-slf4j</artifactId>
-		    <version>1.7.5</version>
-		</dependency> -->
 		
   		<dependency>
 		    <groupId>org.owasp.esapi</groupId>
@@ -262,7 +250,6 @@
 				<version>6.1.16</version>
 				<configuration>
 					<reload>manual</reload>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
 					<webApp>
 						<contextPath>/ptcitizencard</contextPath>
 					</webApp>

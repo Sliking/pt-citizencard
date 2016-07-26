@@ -349,12 +349,14 @@ public class CitizenCard {
           }));
     }
     
+    
+    
     public boolean getData() throws PteidException {
         try {
         pteid.Init("");
 
         pteid.SetSODChecking(false);
-
+        
         PTEID_ID idData = pteid.GetID();
         if (null != idData) {
           this.deliveryEntity = idData.deliveryEntity;
@@ -387,7 +389,7 @@ public class CitizenCard {
 
           //Read Certificates
           this.certs = pteid.GetCertificates();
-          
+
           PTEID_Pin[] pin = pteid.GetPINs();
           this.authPinTriesLeft = pin[0].triesLeft;
           this.sigPinTriesLeft = pin[1].triesLeft;
@@ -472,55 +474,72 @@ public class CitizenCard {
         return true;
     }
     
-public void errorCC(int errorNumber, String ex) {
-  String message;
-  switch (errorNumber) {
-    case 1101:
-      message = ("Erro desconhecido - Problemas com o serviço de leitor de cartões \nMessage: " + ex);
-      errorMessage(message);
-      break;
-    case 1104:
-      message = ("Não foi possível aceder ao cartão.\nVerifique se está corretamente inserido no leitor");
-      errorMessage(message);
-      break;
-    case 1109:
-      message = ("Acão cancelada pelo utilizador");
-      errorMessage(message);
-      break;
-    case 12109:
-      message = ("Não é permitido.");
-      errorMessage(message);
-      break;
-    case 1210:
-      message = ("O cartão inserido não corresponde a um cartão de cidadão válido.");
-      errorMessage(message);
-      break;
-    case 1212:
-      message = ("Pin de morada bloqueado. Resta(m) 0 tentativa(s).\n" + ex);
-      errorMessage(message);
-      break;
-    case 1214:
-      message = ("Pin inválido, não tente novamente.\n" + ex);
-      errorMessage(message);
-      break;
-    case 1304:
-      message = ("Pin inválido, não tente novamente.\n" + ex);
-      errorMessage(message);
-      break;
-    default:
-      message = ("Erro desconhecido: " + ex);
-      errorMessage(message);
-      break;
-  }
-}
+	public void errorCC(int errorNumber, String ex) {
+	  String message;
+	  switch (errorNumber) {
+	    case 1101:
+	      message = ("Erro desconhecido - Problemas com o serviço de leitor de cartões \nMessage: " + ex);
+	      errorMessage(message);
+	      break;
+	    case 1104:
+	      message = ("Não foi possível aceder ao cartão.\nVerifique se está corretamente inserido no leitor");
+	      errorMessage(message);
+	      break;
+	    case 1109:
+	      message = ("Acão cancelada pelo utilizador");
+	      errorMessage(message);
+	      break;
+	    case 12109:
+	      message = ("Não é permitido.");
+	      errorMessage(message);
+	      break;
+	    case 1210:
+	      message = ("O cartão inserido não corresponde a um cartão de cidadão válido.");
+	      errorMessage(message);
+	      break;
+	    case 1212:
+	      message = ("Pin de morada bloqueado. Resta(m) 0 tentativa(s).\n" + ex);
+	      errorMessage(message);
+	      break;
+	    case 1214:
+	      message = ("Pin inválido, não tente novamente.\n" + ex);
+	      errorMessage(message);
+	      break;
+	    case 1304:
+	      message = ("Pin inválido, não tente novamente.\n" + ex);
+	      errorMessage(message);
+	      break;
+	    default:
+	      message = ("Erro desconhecido: " + ex);
+	      errorMessage(message);
+	      break;
+	  }
+	}
+	
+	public static void errorMessage(String message){
+	        JOptionPane.showMessageDialog(new JFrame(), message, "Error", JOptionPane.ERROR_MESSAGE);
+	    }
+	
+	public String toString(){
+	    return "FirstName: " + getFirstname() + "\n" + "Address pin tries: " + getAddrPinTriesLeft() + "\n" +
+	            "Birthday: " + getBirthDate() + "\n" + "Card Number: " + getCardNumber() + "\n";
+	}
+	
+	public boolean verifyPin(String loginpin) throws PteidException{
+		try {
+			pteid.Init("");
+	        pteid.SetSODChecking(false);
+			PTEID_Pin[] pin = pteid.GetPINs();
+			if(pteid.VerifyPIN(pin[0].id, loginpin) > 0)
+				return true;
+		} catch (PteidException e) {
+			e.printStackTrace();
+		}finally{
+			pteid.Exit(0);
+		}
+		
+		return false;
 
-public static void errorMessage(String message){
-        JOptionPane.showMessageDialog(new JFrame(), message, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-public String toString(){
-    return "FirstName: " + getFirstname() + "\n" + "Address pin tries: " + getAddrPinTriesLeft() + "\n" +
-            "Birthday: " + getBirthDate() + "\n" + "Card Number: " + getCardNumber() + "\n";
-}
+	}
 
 }

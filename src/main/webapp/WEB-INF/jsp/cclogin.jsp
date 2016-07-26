@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@page session="true"%>
 <!DOCTYPE html>
 <html >
@@ -72,24 +73,14 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
   <body onload='document.loginForm.username.focus();'>
 
     <div class="login">
-		<h1>Login</h1>
-	    <form name='loginForm' method='POST' action="index.html" >
-	    	<input type="hidden" id="authPin" />
-	    	<input type="text" name="username" placeholder="Username" required="required" />
-	        <input type="password" name="password" placeholder="Password" required="required" />
+		<h1>Citizen Card Login</h1>
+	    <form:form name='loginForm' method='POST' commandName="user" action="verify" >
+	    	<form:password path="password" placeholder="Pin"/>
 	        <button type="submit" class="btn btn-primary btn-block btn-large">Let me in.</button>
-	        <p></p>
-	        <button type="button" class="btn btn-primary btn-block btn-large" onclick="authPinFunc()">Cartão de Cidadão</button>
 	         <input type="hidden" name="${_csrf.parameterName}"
 			value="${_csrf.token}" />
-	    </form>
+	    </form:form>
 	</div>
-	
-	<script>
-		function authPinFunc(){
-			window.location.href = "cclogin";
-		}
-	</script>
     
     <script src="js/index.js"></script>
   
